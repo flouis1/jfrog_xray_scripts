@@ -79,12 +79,12 @@ function prepare_updates {
     if [ -n "$indexing_config_response" ]; then
       local retention_in_days=$(echo "$indexing_config_response" | jq -r '.repo_config.retention_in_days')
       
-      # Check if retention_in_days is set and if it is less than or equal to 50
-      if [ -n "$retention_in_days" ] && [ "$retention_in_days" -le 50 ]; then
+      # Check if retention_in_days is set and if it is less than or equal to 180
+      if [ -n "$retention_in_days" ] && [ "$retention_in_days" -le 180 ]; then
         repos_to_update+=("$repo_key")
         
-        # Update retention_in_days to 50
-        local new_json=$(echo "$indexing_config_response" | jq '.repo_config.retention_in_days = 50')
+        # Update retention_in_days to 180
+        local new_json=$(echo "$indexing_config_response" | jq '.repo_config.retention_in_days = 180')
         
         # Write the updated JSON to the repos_to_update file
         echo "$new_json" | grep -v '^\s*$' >> "$REPOS_TO_UPDATE"
